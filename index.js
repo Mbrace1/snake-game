@@ -4,19 +4,46 @@ const ctx = canvas.getContext('2d')
 let tiles = 20;
 let tileSize = canvas.width / tiles -2;
 let gameOver = false
+let score = 0
+const scoreSpan = document.getElementById("score")
+const highScore = document.getElementById("highScore")
+const startGameBtn = document.getElementById("start-game")
+
+const restartGame = () => {
+    highScore.innerHTML = score
+    score = 0;
+    scoreSpan.innerHTML = score
+    snakeX = 10;
+    snakeY = 10;
+    foodX = 5;
+    foodY = 5;
+    snakeDx = 0;
+    snakeDy = 0;
+    snakeBody = [];
+    foodEaten = 2;
+    gameOver = false
+    game()
+}
+
+startGameBtn.addEventListener("click", restartGame)
 
 const game = () => {
-  resetCanvas()
-  collisions()
+  if (gameOver) {
+    startGameBtn.classList.remove("hide-btn")
+  } else {
+    startGameBtn.classList.add("hide-btn")
+  }
 
   if (gameOver) {
-    console.log("game over")
+    // stop refreshing screen
     return
   }
 
+  resetCanvas()
   drawFood()
   snakePos()
   drawSnake()
+  collisions()
   setTimeout(game, 200)
 }
 
@@ -30,7 +57,7 @@ let snakeY = 10;
 let snakeDx = 0;
 let snakeDy = 0;
 let snakeBody = [];
-let foodEaten = 1;
+let foodEaten = 2;
 
 
 const drawSnake = () => {
@@ -50,7 +77,7 @@ const drawSnake = () => {
 
   ctx.fillStyle = "green"
   // draw all snake body parts in array
-  for (let i = 0; i < foodEaten; i++) {
+  for (let i = 0; i < snakeBody.length; i++) {
     ctx.fillRect(snakeBody[i].x * tiles,snakeBody[i].y * tiles, tileSize, tileSize)
   }
 
@@ -112,6 +139,8 @@ const collisions = () => {
     foodX = Math.floor(Math.random() * tiles)
     foodY = Math.floor(Math.random() * tiles)
     foodEaten++
+    score++
+    scoreSpan.innerHTML = score
     // console.log(snakeBody)
   }
 
@@ -126,10 +155,6 @@ const collisions = () => {
     }
   }
 
-  // if (snakeDx === 0 && snakeDy === 0) {
-  //   gameOver = false
-  // }
-
   // wall collisions
   if (snakeX === tiles || snakeX < 0) {
     gameOver = true
@@ -138,11 +163,15 @@ const collisions = () => {
   if (snakeY === tiles || snakeY < 0) {
     gameOver = true
   }
+
+  if (gameOver) {
+    ctx.font = '48px serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = "red"
+    ctx.fillText('GAME OVER!', canvas.width/2, canvas.height -100);
+  }
 }
 
 game()
 
-// collision wall and snake body
-// game over message
-// score counter
-// add a bad apple?
+// add a bad apple? blue == fast orange == take away score etc
