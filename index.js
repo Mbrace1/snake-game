@@ -15,7 +15,9 @@ const arrowLeft = document.getElementById("arrow-left")
 const arrowRight = document.getElementById("arrow-right")
 
 const restartGame = () => {
+  if (score > highScore.innerHTML) {
     highScore.innerHTML = score
+  }
     score = 0;
     scoreSpan.innerHTML = score
     snakeX = 10;
