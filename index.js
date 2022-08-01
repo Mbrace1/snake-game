@@ -160,15 +160,17 @@ const collisions = () => {
     score++
     scoreSpan.innerHTML = score
   }
-  if (snakeX === badFoodX && snakeY === badFoodY) {
-    badFoodX = Math.floor(Math.random() * tiles)
-    badFoodY = Math.floor(Math.random() * tiles)
-    if (foodEaten > 2) {
-      foodEaten--
-      snakeBody.shift()
+  if (score > 5) {
+    if (snakeX === badFoodX && snakeY === badFoodY) {
+      badFoodX = Math.floor(Math.random() * tiles)
+      badFoodY = Math.floor(Math.random() * tiles)
+      if (foodEaten > 2) {
+        foodEaten--
+        snakeBody.shift()
+      }
+      score--
+      scoreSpan.innerHTML = score
     }
-    score--
-    scoreSpan.innerHTML = score
   }
 
   // body collisions
