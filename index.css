@@ -38,11 +38,83 @@ h2 {
     color: white;
 }
 
-p {
+#instruction {
     color: black;
 }
 
 h2 span {
     background: black;
-    padding: .5em;
+    padding: .25em;
+}
+
+#mobile-controls {
+    margin-top: 1em;
+}
+
+#mobile-controls .arrow {
+    width: 30px;
+    height: 30px;
+    padding: .2em;
+    border: 2px solid black;
+    background: black;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#mobile-controls .arrow:active {
+    background: red;
+}
+
+.arrow.arrow-up, .arrow#arrow-down {
+    display: inline-block;
+}
+
+#arrow-left, #arrow-right {
+    display: inline-block;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.horizontal {
+    display: block;
+}
+
+.arrow-icon {
+    border: solid #fff;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+#arrow-right .arrow-icon {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+#arrow-left .arrow-icon {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+#arrow-up .arrow-icon {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+#arrow-down .arrow-icon {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+@media screen and (max-width: 480px) {
+    h2 {
+        font-size: 0.9em;
+    }
+
+    #instruction {
+        display: none;;
+    }
+
+    /* #mobile-controls {
+        display: block;
+    } */
 }

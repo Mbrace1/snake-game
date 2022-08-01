@@ -1,13 +1,17 @@
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
-let tiles = 20;
+let tiles = 18;
 let tileSize = canvas.width / tiles -2;
 let gameOver = false
 let score = 0
 const scoreSpan = document.getElementById("score")
 const highScore = document.getElementById("highScore")
 const startGameBtn = document.getElementById("start-game")
+const arrowUp = document.getElementById("arrow-up")
+const arrowDown = document.getElementById("arrow-down")
+const arrowLeft = document.getElementById("arrow-left")
+const arrowRight = document.getElementById("arrow-right")
 
 const restartGame = () => {
     highScore.innerHTML = score
@@ -96,28 +100,28 @@ const snakePos = () => {
 }
 
 const snakeControls = (e) => {
-  if (e.keyCode === 38) {
+  if (e.keyCode === 38 || e.currentTarget.id === "arrow-up") {
     if (snakeDy === 1 || snakeDy === -1) {
       return
     }
     snakeDx = 0
     snakeDy -= 1
   }
-  if (e.keyCode === 40) {
+  if (e.keyCode === 40 || e.currentTarget.id === "arrow-down") {
     if (snakeDy === -1 || snakeDy === 1) {
       return
     }
     snakeDx = 0
     snakeDy += 1
   }
-  if (e.keyCode === 39) {
+  if (e.keyCode === 39 || e.currentTarget.id === "arrow-left") {
     if (snakeDx === -1 || snakeDx === 1) {
       return
     }
     snakeDx += 1
     snakeDy = 0
   }
-  if (e.keyCode === 37) {
+  if (e.keyCode === 37 || e.currentTarget.id === "arrow-right") {
     if (snakeDx === 1 || snakeDx === -1) {
       return
     }
@@ -127,6 +131,10 @@ const snakeControls = (e) => {
 }
 
 document.addEventListener("keydown", snakeControls)
+arrowUp.addEventListener("click", snakeControls)
+arrowDown.addEventListener("click", snakeControls)
+arrowLeft.addEventListener("click", snakeControls)
+arrowRight.addEventListener("click", snakeControls)
 
 let foodX = Math.floor(Math.random() * tiles)
 let foodY = Math.floor(Math.random() * tiles)
