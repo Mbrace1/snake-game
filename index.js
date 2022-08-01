@@ -5,6 +5,7 @@ let tiles = 18;
 let tileSize = canvas.width / tiles -2;
 let gameOver = false
 let score = 0
+let gameSpeed = 200
 const scoreSpan = document.getElementById("score")
 const highScore = document.getElementById("highScore")
 const startGameBtn = document.getElementById("start-game")
@@ -47,11 +48,20 @@ const game = () => {
   if (score > 5) {
     drawBadFood()
   }
+
+  if (score > 10) {
+    gameSpeed = 150
+  }
+
+  if (score > 15) {
+    gameSpeed = 100
+  }
+
   drawFood()
   snakePos()
   drawSnake()
   collisions()
-  setTimeout(game, 200)
+  setTimeout(game, gameSpeed)
 }
 
 const resetCanvas = () => {
