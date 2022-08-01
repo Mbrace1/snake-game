@@ -15,8 +15,8 @@ const restartGame = () => {
     scoreSpan.innerHTML = score
     snakeX = 10;
     snakeY = 10;
-    foodX = 5;
-    foodY = 5;
+    foodX = Math.floor(Math.random() * tiles)
+    foodY = Math.floor(Math.random() * tiles)
     snakeDx = 0;
     snakeDy = 0;
     snakeBody = [];
@@ -40,6 +40,9 @@ const game = () => {
   }
 
   resetCanvas()
+  if (score > 5) {
+    drawBadFood()
+  }
   drawFood()
   snakePos()
   drawSnake()
@@ -125,11 +128,18 @@ const snakeControls = (e) => {
 
 document.addEventListener("keydown", snakeControls)
 
-let foodX = 5;
-let foodY = 5;
+let foodX = Math.floor(Math.random() * tiles)
+let foodY = Math.floor(Math.random() * tiles)
 const drawFood = () => {
   ctx.fillStyle = "red"
   ctx.fillRect(foodX * tiles,foodY * tiles, tileSize, tileSize)
+}
+
+let badFoodX = Math.floor(Math.random() * tiles);
+let badFoodY = Math.floor(Math.random() * tiles);
+const drawBadFood = () => {
+  ctx.fillStyle = "blue"
+  ctx.fillRect(badFoodX * tiles,badFoodY * tiles, tileSize, tileSize)
 }
 
 const collisions = () => {
@@ -141,15 +151,22 @@ const collisions = () => {
     foodEaten++
     score++
     scoreSpan.innerHTML = score
-    // console.log(snakeBody)
+  }
+  if (snakeX === badFoodX && snakeY === badFoodY) {
+    badFoodX = Math.floor(Math.random() * tiles)
+    badFoodY = Math.floor(Math.random() * tiles)
+    if (foodEaten > 2) {
+      foodEaten--
+      snakeBody.shift()
+    }
+    score--
+    scoreSpan.innerHTML = score
   }
 
   // body collisions
   // last x,y pos is last head pos, so only want to see if head collides with all but last two snake parts
   for (let i = snakeBody.length - 2; i > 0; i--) {
     if (snakeX === snakeBody[i].x && snakeY === snakeBody[i].y) {
-      console.log("hit body")
-      console.log(snakeBody)
       gameOver = true
       break
     }
